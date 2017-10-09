@@ -1,6 +1,6 @@
 package com.iteso.desarrollo.sesion9_2;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,12 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import adapters.AdapterProduct;
 import beans.ItemProduct;
@@ -25,6 +21,7 @@ import beans.ItemProduct;
 public class FragmentTechnology extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private ArrayList<ItemProduct> myDataSet;
 
     public FragmentTechnology() {}
 
@@ -42,9 +39,10 @@ public class FragmentTechnology extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
 
-        ArrayList<ItemProduct> myDataSet = new ArrayList<ItemProduct>();
+        myDataSet = new ArrayList<ItemProduct>();
 
         ItemProduct itemProduct = new ItemProduct();
+        itemProduct.setCode(1);
         itemProduct.setTitle("MacBook Pro 17''");
         itemProduct.setStore("BestBuy");
         itemProduct.setLocation("Zapopan, Jalisco");
@@ -55,6 +53,7 @@ public class FragmentTechnology extends Fragment {
         myDataSet.add(itemProduct);
 
         itemProduct = new ItemProduct();
+        itemProduct.setCode(2);
         itemProduct.setTitle("Alienware 17''");
         itemProduct.setStore("BestBuy");
         itemProduct.setLocation("Zapopan, Jalisco");
@@ -70,4 +69,21 @@ public class FragmentTechnology extends Fragment {
         return view;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        ItemProduct itemProduct = data.getParcelableExtra("ITEM");
+        Iterator<ItemProduct> iterator = myDataSet.iterator();
+
+        int position = 0;
+        while(iterator.hasNext()){
+            ItemProduct item = iterator.next();
+            if(item.getCode() == itemProduct.getCode()){
+                myDataSet.set(position, itemProduct);
+                break;
+            }
+            position ++;
+        }
+
+        mAdapter.notifyDataSetChanged();
+    }
 }

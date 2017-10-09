@@ -15,11 +15,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.iteso.desarrollo.sesion9_2.ActivityDetail;
+import com.iteso.desarrollo.sesion9_2.ActivityMain;
 import com.iteso.desarrollo.sesion9_2.R;
 
 import java.util.ArrayList;
 
 import beans.ItemProduct;
+import static Commons.Commons.*;
 
 /**
  * Created by Desarrollo on 24/09/2017.
@@ -76,6 +79,15 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHold
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + mDataSet.get(position).getPhone()));
                 context.startActivity(intent);
+            }
+        });
+
+        holder.mEventLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ActivityDetail.class);
+                intent.putExtra("ITEM", mDataSet.get(position));
+                ((ActivityMain)context).startActivityForResult(intent, DETAIL_SUBACTIVITY);
             }
         });
     }

@@ -15,7 +15,9 @@ import com.iteso.desarrollo.sesion9_2.R;
  */
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
-    Context context;
+    public FragmentTechnology fragmentTechnology;
+    protected Context context;
+
 
     public SectionsPagerAdapter(FragmentManager fm, Context context){
         super(fm);
@@ -26,7 +28,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch(position){
             case 0:
-                return new FragmentTechnology();
+                if(fragmentTechnology == null)
+                    fragmentTechnology = new FragmentTechnology();
+                return fragmentTechnology;
             case 1:
                 return new FragmentHome();
             case 2:
