@@ -22,7 +22,7 @@ import com.iteso.desarrollo.sesion9_2.R;
 import java.util.ArrayList;
 
 import beans.ItemProduct;
-import static Commons.Commons.*;
+import static Commons.Constants.*;
 
 /**
  * Created by Desarrollo on 24/09/2017.
@@ -51,9 +51,9 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.mProductTitle.setText(mDataSet.get(position).getTitle());
-        holder.mProductStore.setText(mDataSet.get(position).getStore());
-        holder.mProductLocation.setText(mDataSet.get(position).getLocation());
-        holder.mProductPhone.setText(mDataSet.get(position).getPhone());
+        holder.mProductStore.setText(mDataSet.get(position).getStore().getName());
+        holder.mProductLocation.setText(mDataSet.get(position).getStore().getCity().getName() + ", Jalisco");
+        holder.mProductPhone.setText(mDataSet.get(position).getStore().getPhone());
 
         switch (mDataSet.get(position).getImage()){
             case 0:
@@ -77,7 +77,7 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHold
         holder.mProductPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + mDataSet.get(position).getPhone()));
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + mDataSet.get(position).getStore().getPhone()));
                 context.startActivity(intent);
             }
         });

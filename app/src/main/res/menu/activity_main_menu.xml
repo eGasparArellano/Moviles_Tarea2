@@ -2,18 +2,23 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/activity_main_logout"
-        android:title="Logout"
-        app:showAsAction="never"/>
+        android:id="@+id/action_products"
+        android:title="@string/activity_main_menu_products"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/activity_main_privacy_policy"
-        android:title="Privacy policy"
+        android:title="@string/activity_main_menu_privacy_policy"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/activity_main_EULA"
-        android:title="EULA"
+        android:title="@string/activity_main_menu_EULA"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/activity_main_logout"
+        android:title="@string/activity_main_menu_logout"
+        app:showAsAction="never"/>
 
 </menu>

@@ -11,6 +11,7 @@ public class ActivityPrivacyPolicy extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_privacy_policy);
 
+        // Cast y carga del archivo HTML al webview
         WebView webView = (WebView) findViewById(R.id.activity_privacy_policy_webview);
         webView.loadUrl("file:///android_asset/PrivacyPolicy.html");
     }

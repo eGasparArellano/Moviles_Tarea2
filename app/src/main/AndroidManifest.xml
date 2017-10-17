@@ -9,7 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <uses-permission android:name="android.permission.CALL_PHONE" />
         <uses-permission android:name="android.permission.INTERNET" />
 
@@ -20,6 +19,8 @@
         <activity android:name=".ActivityLogin" />
         <activity android:name=".ActivityPrivacyPolicy" />
         <activity android:name=".ActivityEULA">
+
+            <!--
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -34,13 +35,18 @@
 
                 <data android:scheme="https" />
             </intent-filter>
+            -->
         </activity>
-        <activity android:name=".ActivitySplashScreen" android:theme="@style/AppTheme">
+        <activity
+            android:name=".ActivitySplashScreen"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ActivityProduct" android:theme="@style/AppTheme2" />
     </application>
 
 </manifest>

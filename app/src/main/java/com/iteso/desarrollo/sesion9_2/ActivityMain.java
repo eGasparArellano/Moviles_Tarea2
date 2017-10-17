@@ -11,8 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import Commons.Constants;
 import adapters.SectionsPagerAdapter;
-import static Commons.Commons.*;
+import beans.ItemProduct;
 
 public class ActivityMain extends AppCompatActivity {
     protected Toolbar toolbar;
@@ -27,7 +28,7 @@ public class ActivityMain extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         viewPager = (ViewPager) findViewById(R.id.activity_main_viewpager);
         mSection = new SectionsPagerAdapter(getSupportFragmentManager(), this);
@@ -39,19 +40,43 @@ public class ActivityMain extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == DETAIL_SUBACTIVITY){
-            if(resultCode == RESULT_OK){
-                mSection.fragmentTechnology.onActivityResult(requestCode, resultCode, data);
-            }
+        switch(requestCode){
+            case Constants.INTENT_PRODUCTS_NOTIFY:
+                if(resultCode == RESULT_OK) {
+                    if(data != null){
+                        ItemProduct itemProduct = data.getParcelableExtra("ITEM");
+
+                        if(itemProduct.getCategory().getName().equalsIgnoreCase("TECHNOLOGY")){
+                            mSection.fragmentTechnology.notifyDataSetChanged(itemProduct);
+                        }
+
+                        else if(itemProduct.getCategory().getName().equalsIgnoreCase("HOME")){
+                            mSection.fragmentHome.notifyDataSetChanged(itemProduct);
+                        }
+
+                        else if(itemProduct.getCategory().getName().equalsIgnoreCase("HOME")){
+                            mSection.fragmentElectronics.notifyDataSetChanged(itemProduct);
+                        }
+                    }
+                }
+                break;
+
+            case Constants.DETAIL_SUBACTIVITY:
+                if(resultCode == RESULT_OK){
+                    mSection.fragmentTechnology.onActivityResult(requestCode, resultCode, data);
+                }
+                break;
         }
     }
 
+    // Inflar el XML del menú
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    // Qué hacer en caso de presionar los botones del menú
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
@@ -69,10 +94,15 @@ public class ActivityMain extends AppCompatActivity {
                 intent = new Intent(this, ActivityEULA.class);
                 startActivity(intent);
                 break;
+            case R.id.action_products:
+                Intent products = new Intent(this, ActivityProduct.class);
+                startActivityForResult(products, Constants.INTENT_PRODUCTS_NOTIFY);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    // Limpiar las preferencias compartidas para que se pueda hacer el Log Out
     public void clearPreferences(){
         SharedPreferences sharedPreferences = getSharedPreferences("com.iteso.desarrollo.sesion9_2", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

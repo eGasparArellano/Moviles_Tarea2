@@ -12,12 +12,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import adapters.AdapterProduct;
+import beans.Category;
+import beans.City;
 import beans.ItemProduct;
+import beans.Store;
+import database.DataBaseHandler;
+import database.ItemProductControl;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class FragmentTechnology extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -35,36 +36,23 @@ public class FragmentTechnology extends Fragment {
         // no modifican el tamaño del Layout del RecyclerView
         recyclerView.setHasFixedSize(true);
 
-        // Usa un linear layout manager
+        // Obtengo todos los productos de la categoría Technology
+        ItemProductControl itemProductControl = new ItemProductControl();
+
+        myDataSet = itemProductControl.getProductsWhere(
+                "CA." + DataBaseHandler.KEY_CATEGORY_NAME + " = 'TECHNOLOGY'",
+                DataBaseHandler.KEY_PRODUCT_ID + " ASC",
+                DataBaseHandler.getInstance(getActivity()));
+
+        // Establece el layout manager para el recycler view. Usa un linear layout manager
         mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
 
-        myDataSet = new ArrayList<ItemProduct>();
-
-        ItemProduct itemProduct = new ItemProduct();
-        itemProduct.setCode(1);
-        itemProduct.setTitle("MacBook Pro 17''");
-        itemProduct.setStore("BestBuy");
-        itemProduct.setLocation("Zapopan, Jalisco");
-        itemProduct.setPhone("33 12345678");
-        itemProduct.setImage(0);
-        itemProduct.setDescription("Llevate esta Mac con un 30% de descuento para que puedas programar para XCode y Android sin tener que batallar tanto como en tu Windows");
-
-        myDataSet.add(itemProduct);
-
-        itemProduct = new ItemProduct();
-        itemProduct.setCode(2);
-        itemProduct.setTitle("Alienware 17''");
-        itemProduct.setStore("BestBuy");
-        itemProduct.setLocation("Zapopan, Jalisco");
-        itemProduct.setPhone("33 87654321");
-        itemProduct.setImage(1);
-        itemProduct.setDescription("El producto de arriba miente, esta es mejor :)");
-
-        myDataSet.add(itemProduct);
-
+        // Carga los datos al adaptador y se establece en el recycler view
         mAdapter = new AdapterProduct(getActivity(), myDataSet);
         recyclerView.setAdapter(mAdapter);
+
+        itemProductControl = null;
 
         return view;
     }
@@ -84,6 +72,11 @@ public class FragmentTechnology extends Fragment {
             position ++;
         }
 
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public void notifyDataSetChanged(ItemProduct itemProduct){
+        myDataSet.add(itemProduct);
         mAdapter.notifyDataSetChanged();
     }
 }

@@ -33,9 +33,9 @@ public class ActivityDetail extends AppCompatActivity {
 
         product = getIntent().getParcelableExtra("ITEM");
 
-        store.setText(product.getStore());
+        store.setText(product.getStore().getName());
         title.setText(product.getTitle());
-        location.setText(product.getLocation());
+        location.setText(product.getStore().getCity().getName());
 
         switch (product.getImage()){
             case 0:
@@ -50,8 +50,8 @@ public class ActivityDetail extends AppCompatActivity {
     public void onClick(View view){
         if(view.getId() == R.id.activity_detail_save){
             product.setTitle(title.getText().toString());
-            product.setStore(store.getText().toString());
-            product.setLocation(location.getText().toString());
+            product.getStore().setName(store.getText().toString());
+            product.getStore().getCity().setName(location.getText().toString());
 
             Intent intent = new Intent();
             intent.putExtra("ITEM", product);

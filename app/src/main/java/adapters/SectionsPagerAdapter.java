@@ -16,6 +16,9 @@ import com.iteso.desarrollo.sesion9_2.R;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public FragmentTechnology fragmentTechnology;
+    public FragmentHome fragmentHome;
+    public FragmentElectronics fragmentElectronics;
+
     protected Context context;
 
 
@@ -32,9 +35,13 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                     fragmentTechnology = new FragmentTechnology();
                 return fragmentTechnology;
             case 1:
-                return new FragmentHome();
+                if(fragmentHome == null)
+                    fragmentHome = new FragmentHome();
+                return fragmentHome;
             case 2:
-                return new FragmentElectronics();
+                if(fragmentElectronics == null)
+                    fragmentElectronics = new FragmentElectronics();
+                return fragmentElectronics;
             default:
                 return new FragmentTechnology();
         }

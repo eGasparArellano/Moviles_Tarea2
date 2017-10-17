@@ -8,27 +8,34 @@ import android.os.Parcelable;
  */
 
 public class ItemProduct implements Parcelable {
-    private int image, code;
-    private String title, store, location, phone, description;
+    private int code;
+    private int image;
+    private String title;
+    private String description;
+    private Category category;
+    private Store store;
 
-    public ItemProduct(){
-        image = 0;
-        title = "";
-        store = "";
-        location = "";
-        phone = "";
-        description = "";
-    }
+    public ItemProduct(){}
 
     // En el mismo orden que lees debes escribir
-    public ItemProduct(Parcel in){
+    public ItemProduct(Parcel in) {
         code = in.readInt();
         image = in.readInt();
         title = in.readString();
-        store = in.readString();
-        location = in.readString();
-        phone = in.readString();
         description = in.readString();
+        category = in.readParcelable(Category.class.getClassLoader());
+        store = in.readParcelable(Store.class.getClassLoader());
+    }
+
+    // Escribes en el orden en el que leíste
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(code);
+        dest.writeInt(image);
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeParcelable(category, flags);
+        dest.writeParcelable(store, flags);
     }
 
     @Override
@@ -36,19 +43,7 @@ public class ItemProduct implements Parcelable {
         return 0;
     }
 
-    // Escribes en el orden en el que leíste
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(code);
-        parcel.writeInt(image);
-        parcel.writeString(title);
-        parcel.writeString(store);
-        parcel.writeString(location);
-        parcel.writeString(phone);
-        parcel.writeString(description);
-    }
-
-    public static final Parcelable.Creator<ItemProduct> CREATOR = new Parcelable.Creator<ItemProduct>() {
+    public static final Creator<ItemProduct> CREATOR = new Creator<ItemProduct>() {
         @Override
         public ItemProduct createFromParcel(Parcel in) {
             return new ItemProduct(in);
@@ -84,30 +79,6 @@ public class ItemProduct implements Parcelable {
         this.title = title;
     }
 
-    public String getStore() {
-        return store;
-    }
-
-    public void setStore(String store) {
-        this.store = store;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -116,9 +87,25 @@ public class ItemProduct implements Parcelable {
         this.description = description;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
+
     @Override
     public String toString() {
-        return "ItemProduct{image=" + image + ", title='" + title + "', store='" + store
-                + "', location='" + location + "', phone='" + phone + "', description='" + description + "'}";
+        return "ItemProduct{image=" + image + ", title='" + title + "', store='" + store.getName()
+                + "', location='" + store.getCity().getName() + "', phone='" + this.store.getPhone() + "', description='" + description + "'}";
     }
 }

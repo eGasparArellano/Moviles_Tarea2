@@ -1,11 +1,20 @@
 <resources>
-    <string name="app_name">Sesion9_2</string>
+    <string name="app_name">Products</string>
+
     <string name="fragment_tab1">Technology</string>
     <string name="fragment_tab2">Home</string>
     <string name="fragment_tab3">Electronics</string>
+
     <string name="activity_login_username">Username</string>
     <string name="activity_login_password">Password</string>
     <string name="activity_splash_screen_welcome">Welcome to My Products</string>
+
+    <string name="activity_main_menu_products">Products</string>
+    <string name="activity_main_menu_privacy_policy">Privacy policy</string>
+    <string name="activity_main_menu_EULA">EULA</string>
+    <string name="activity_main_menu_logout">Log Out</string>
+
+    <string name="activity_product_menu_save">Guardar</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

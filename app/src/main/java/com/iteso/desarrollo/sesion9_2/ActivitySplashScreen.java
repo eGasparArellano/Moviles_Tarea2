@@ -16,6 +16,7 @@ public class ActivitySplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+        // Task para determinar si el usuario está loggeado o no y mandarlo a la actividad correspondiente
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
@@ -34,6 +35,6 @@ public class ActivitySplashScreen extends AppCompatActivity {
         };
 
         Timer timer = new Timer();
-        timer.schedule(task, 2500);
+        timer.schedule(task, 2500); // Espera 2.5s y ejecuta el task
     }
 }
